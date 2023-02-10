@@ -1,0 +1,27 @@
+﻿@model Danyal_Chatha_Passion_Project.Models.TeamDto
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Update Team</h2>
+<div id=" containershow">
+    <form action="/Team/Update/@Model.TeamId" method="Post">
+        <div style="display:none;">
+            <input type="text" name="TeamId" value="@Model.TeamId" />
+        </div>
+        <div>
+            <label for="TeamName">Team Name</label>
+            <input type="text" name="TeamName" value="@Model.TeamName" />
+        </div>
+        <div class="inputrow">
+            <div>
+                <label for="TeamBio">Team Bio:</label>
+            </div>
+            <textarea name="TeamBio" id="TeamBio">@Model.TeamBio</textarea>
+        </div>
+        <div>
+            <input type="submit" value="Update Team" />
+        </div>
+    </form>
+</div>
+

@@ -1,0 +1,11 @@
+﻿@model Danyal_Chatha_Passion_Project.Models.AccoladeDto
+@{
+    ViewBag.Title = "DeleteConfirm";
+}
+
+<h2>Are you sure you want to delete this Accolade?</h2>
+<a href="/Accolade/List">Cancel</a>
+<h3>Name: @Model.AccoladeName</h3>
+<form action="/Accolade/Delete/@Model.AccoladeId" method="POST">
+    <input style="background-color:red; color:white" type="submit" value="Confirm Delete" />
+</form>

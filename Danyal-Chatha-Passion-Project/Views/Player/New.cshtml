@@ -1,0 +1,29 @@
+﻿@model IEnumerable<Danyal_Chatha_Passion_Project.Models.TeamDto>
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Add Player</h2>
+<form action="/Player/Create" method="Post">
+    <div>
+        <label>Name:</label> <input type="text" name="PlayerName" />
+    </div>
+    <div>
+        <label>Jersey Number:</label> <input type="number" name="PlayerJersey" />
+    </div>
+    <div>
+        <label>Position:</label> <input type="text" name="PlayerPosition" />
+    </div>
+    <div>
+        <label>Team:</label>
+        <select name="TeamId">
+            @foreach (var team in Model)
+            {
+                <option value="@team.TeamId">@team.TeamName</option>
+            }
+        </select>
+    </div>
+    <div>
+        <input type="submit" value="Add Player"/>
+    </div>
+</form>

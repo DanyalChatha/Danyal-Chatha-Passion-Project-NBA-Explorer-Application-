@@ -1,0 +1,22 @@
+﻿@model Danyal_Chatha_Passion_Project.Models.AccoladeDto
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Update Accolade</h2>
+<form action="/Accolade/Update/@Model.AccoladeId" method="post">
+    <div style="display:none;">
+        @*Pass through the Accolade Id*@
+        <input type="text" name="AccoaldeId" value="@Model.AccoladeId" />
+    </div>
+    <div>
+        <label>Accolade Name:</label> <input type="text" name="AccoladeName" value="@Model.AccoladeName" />
+    </div>
+    <div>
+        <label>Year of Creation:</label> <input type="number" name="AccoladeYear" value="@Model.AccoladeYear" />
+    </div>
+    <div>
+        <input type="submit" value="Update Accolade" />
+    </div>
+</form>
+

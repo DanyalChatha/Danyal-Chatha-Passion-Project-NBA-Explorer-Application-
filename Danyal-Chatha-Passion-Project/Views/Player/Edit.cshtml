@@ -1,0 +1,40 @@
+﻿@model Danyal_Chatha_Passion_Project.Models.ViewModels.UpdatePlayer
+
+@{    
+ ViewBag.Title = "Edit";
+}
+
+<h2>Update Player</h2>
+<form action="/Player/Update/@Model.SelectedPlayer.PlayerId" method="POST">
+    <div style="display:none;">
+        @*Pass through the player id*@
+        <input type="text" name="PlayerId" value="@Model.SelectedPlayer.PlayerId" />
+    </div>
+    <div>
+        <label>Name:</label> <input type="text" name="PlayerName" value="@Model.SelectedPlayer.PlayerName"/>
+    </div>
+    <div>
+        <label>Jersey Number:</label> <input type="number" name="PlayerJersey" value="@Model.SelectedPlayer.PlayerJersey" />
+    </div>
+    <div>
+        <label>Position:</label> <input type="text" name="PlayerPosition" value="@Model.SelectedPlayer.PlayerPosition" />
+    </div>
+    <div>
+        <label>Team Id:</label>
+
+        <select name="TeamId">
+            @foreach (var team in Model.TeamOptions)
+            {
+                string selected = "";
+                if (team.TeamId == Model.SelectedPlayer.TeamId)
+                {
+                    selected = "selected";
+                }
+                <option value="@team.TeamId" @selected>@team.TeamName</option>
+            }
+        </select>
+    </div>
+    <div>
+        <input type="submit" value="Update Player" />
+    </div>
+</form>

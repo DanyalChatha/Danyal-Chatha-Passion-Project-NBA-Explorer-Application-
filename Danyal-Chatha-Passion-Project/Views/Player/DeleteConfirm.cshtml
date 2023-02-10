@@ -1,0 +1,15 @@
+﻿@model Danyal_Chatha_Passion_Project.Models.PlayerDto    
+@{
+    ViewBag.Title = "DeleteConfirm";
+}
+
+<h2>Are you sure you want delete this Player?</h2>
+<a href="/Player/List">Cancel</a>
+<h2>@Model.PlayerName</h2>
+<div>Jersey Number: @Model.PlayerJersey</div>
+<div>Position: @Model.PlayerPosition</div>
+<form action="/Player/Delete/@Model.PlayerId" method="POST">
+    <input style="background-color:red; color:white"  type="submit" value="Confirm Delete" />
+</form>
+
+    

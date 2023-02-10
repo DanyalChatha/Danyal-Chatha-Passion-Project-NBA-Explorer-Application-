@@ -1,0 +1,12 @@
+﻿@model IEnumerable<Danyal_Chatha_Passion_Project.Models.AccoladeDto>
+@{
+    ViewBag.Title = "List";
+}
+
+<h2>List</h2>
+<a href="/Accolade/New">New Accolade</a>
+@foreach (var accolade in Model)
+{
+    <h2><a href="/Accolade/Details/@accolade.AccoladeId">@accolade.AccoladeName</a></h2>
+    <h3>Year: @accolade.AccoladeYear</h3>
+}

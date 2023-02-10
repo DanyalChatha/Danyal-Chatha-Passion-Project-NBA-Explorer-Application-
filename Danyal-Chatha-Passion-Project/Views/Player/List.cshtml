@@ -1,0 +1,15 @@
+﻿@model IEnumerable<Danyal_Chatha_Passion_Project.Models.PlayerDto>
+@{
+    ViewBag.Title = "List";
+}
+
+<h2>List</h2>
+<a href="~/Player/New">New Player</a>
+@foreach(var player in Model)
+{
+    <h2><a href="/Player/Details/@player.PlayerId">@player.PlayerName</a></h2>
+    <div>Jersey Number: @player.PlayerJersey</div>
+    <div>Position: @player.PlayerPosition</div>
+    <div>Team: @player.TeamName</div>
+} 
+

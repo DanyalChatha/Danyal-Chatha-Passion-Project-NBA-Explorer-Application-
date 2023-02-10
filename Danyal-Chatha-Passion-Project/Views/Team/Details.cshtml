@@ -1,0 +1,24 @@
+﻿@model Danyal_Chatha_Passion_Project.Models.ViewModels.DetailsTeam
+@{
+    ViewBag.Title = "View";
+}
+
+<a href="/Team/List">Go back to List</a>
+<br />
+<a href="/Team/Edit/@Model.SelectedTeam.TeamId">Update</a>
+<br />
+<a style="color:red" href="/Team/DeleteConfirm/@Model.SelectedTeam.TeamId">Delete</a>
+<h2>@Model.SelectedTeam.TeamName</h2>
+<p>@Model.SelectedTeam.TeamBio</p>
+
+<div style="margin-top:100px">
+    <h3>Players playing on this team</h3>
+    @foreach(var player in Model.RelatedPlayers)
+    {<ul>
+     <li>
+    <a href="/Player/Details/@player.PlayerId">@player.PlayerName</a>
+     </li>
+    </ul>
+    }
+</div>
+

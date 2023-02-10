@@ -1,0 +1,12 @@
+﻿@model Danyal_Chatha_Passion_Project.Models.TeamDto
+@{
+    ViewBag.Title = "DeleteConfirm";
+}
+
+<h2>Are you sure you want to delete this team?</h2>
+<a href="/Team/List">Cancel</a>
+<h3>Name: @Model.TeamName</h3>
+
+<form action="/Team/Delete/@Model.TeamId" method="POST">
+    <input style="background-color:red; color:white" type="submit" value="Confirm Delete" />
+</form>

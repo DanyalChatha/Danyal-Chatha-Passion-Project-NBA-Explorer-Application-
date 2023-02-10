@@ -1,0 +1,21 @@
+﻿    @model Danyal_Chatha_Passion_Project.Models.ViewModels.DetailAccolade
+@{
+    ViewBag.Title = "View";
+}
+
+<a href="/Accolade/List">Go back to List</a>
+<br />
+<a href="/Accolade/Edit/@Model.SelectedAccolade.AccoladeId">Update</a>
+<br />
+<a style="color:red;" href="/Accolade/DeleteConfirm/@Model.SelectedAccolade.AccoladeId">Delete</a>
+<h2>@Model.SelectedAccolade.AccoladeName</h2>
+<br />
+<h4> Year: @Model.SelectedAccolade.AccoladeYear</h4>
+
+<div>
+    <h3>Players who have been rewarded this Accolade:</h3>
+    @foreach (var player in Model.RewardedPlayer)
+    {
+        <a href="/Player/Details/@player.PlayerId">@player.PlayerName</a><br />
+    }
+</div>
