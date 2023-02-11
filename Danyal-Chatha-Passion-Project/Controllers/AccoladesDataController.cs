@@ -16,7 +16,12 @@ namespace Danyal_Chatha_Passion_Project.Controllers
     public class AccoladesDataController : ApiController
     {
         private ApplicationDbContext db = new ApplicationDbContext();
-
+        /// <summary>
+        /// Return a list of accolades
+        /// </summary>
+        /// <returns>
+        /// All Accolades in the database are returned.
+        /// </returns>
         // GET: api/AccoladesData/ListAccolades
         [HttpGet]
         [ResponseType(typeof(AccoladeDto))]
@@ -34,7 +39,13 @@ namespace Danyal_Chatha_Passion_Project.Controllers
 
             return Ok(AccoladeDtos);
         }
-
+        /// <summary>
+        /// Return all accolades in the system with an associated player
+        /// </summary>
+        /// <param name="id">The Primary key of the Player </param>
+        /// <returns>
+        /// All accolades that have been rewarded to a particular player
+        /// </returns>
         // GET: api/AccoladesData/ListAccoladeForPlayer/5
         [HttpGet]
         [ResponseType(typeof(AccoladeDto))]
@@ -55,6 +66,13 @@ namespace Danyal_Chatha_Passion_Project.Controllers
 
             return Ok(AccoladeDtos);
         }
+        /// <summary>
+        /// Return Accolades in the system not rewarded to the particular player.
+        /// </summary>
+        /// <param name="id">The Primary key of the Player</param>
+        /// <returns>
+        /// Content: all accolade in the database 
+        /// </returns>
         // GET: api/AccoladesData/ListAccoladeNotForPlayer/5
         [HttpGet]
         [ResponseType(typeof(AccoladeDto))]
@@ -75,7 +93,13 @@ namespace Danyal_Chatha_Passion_Project.Controllers
 
             return Ok(AccoladeDtos);
         }
-
+        /// <summary>
+        /// Return all accolade in the system associated with a particular player
+        /// </summary>
+        /// <param name="id">Accolade Primary key</param>
+        /// <returns>
+        /// Content: A accolade in the system matching the requested id 
+        /// </returns>
         //GET: api/AccoladesData/FindAccolade/5
         [ResponseType(typeof(AccoladeDto))]
         [HttpGet]
@@ -96,6 +120,12 @@ namespace Danyal_Chatha_Passion_Project.Controllers
             return Ok(AccoladeDto);
         }
 
+        /// <summary>
+        /// Updates the Accolade with a matching id 
+        /// </summary>
+        /// <param name="id">TThe Primary key of the Accolade</param>
+        /// <param name="Accolades">JSON FORM DATA of an Accolade</param>
+        /// <returns></returns>
         //POST: api/AccoladesData/UpdateAccolade/5
         [ResponseType(typeof(void))]
         [HttpPost]
@@ -133,7 +163,13 @@ namespace Danyal_Chatha_Passion_Project.Controllers
             }
             return StatusCode(HttpStatusCode.NoContent);
         }
-
+        /// <summary>
+        /// Add an Accolade to the database
+        /// </summary>
+        /// <param name="Accolades">JSON FORM DATA of an accolade</param>
+        /// <returns>
+        /// Content: Accolade Id & Accolade Data
+        /// </returns>
         //POST: api/AccoladesData/AddAccolade
         [ResponseType(typeof(Accolade))]
         [HttpPost]
@@ -152,7 +188,11 @@ namespace Danyal_Chatha_Passion_Project.Controllers
         }   
             
         
-
+        /// <summary>
+        /// Delete the Accolade that matched with the requested id 
+        /// </summary>
+        /// <param name="id">The Primary key of the Accolade</param>
+        /// <returns></returns>
         // DELETE: api/AccoladesData/DeleteAccolade/5
         [ResponseType(typeof(Accolade))]
         [HttpPost]

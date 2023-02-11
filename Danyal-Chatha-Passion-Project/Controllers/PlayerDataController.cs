@@ -20,7 +20,12 @@ namespace Danyal_Chatha_Passion_Project.Controllers
     public class PlayerDataController : ApiController
     {
         private ApplicationDbContext db = new ApplicationDbContext();
-
+        /// <summary>
+        /// Returns a list of players
+        /// </summary>
+        /// <returns>
+        /// Content: all players in the database, including the team they play on.
+        /// </returns>
         // GET: api/PlayerData/ListPlayers
         [HttpGet]
         [ResponseType(typeof(PlayerDto))]
@@ -40,6 +45,13 @@ namespace Danyal_Chatha_Passion_Project.Controllers
                 return Ok(playerDtos);
         }
 
+        /// <summary>
+        /// Gathers info about all players related to a certain team Id
+        /// </summary>
+        /// <param name="id">Team Id</param>
+        /// <returns>
+        /// content: all players in the databse, including the team they play on according to the team id
+        /// </returns>
         //GET: api/PlayerData/ListPlayerforTeam/5
         [HttpGet]
         [ResponseType(typeof(PlayerDto))]
@@ -62,6 +74,13 @@ namespace Danyal_Chatha_Passion_Project.Controllers
             return Ok(playerDtos);
 
         }
+        /// <summary>
+        /// Inquire info about all players related to a certain accolade.
+        /// </summary>
+        /// <param name="id">Accolade Id</param>
+        /// <returns>
+        /// Content: all players in the database including thier rewarded accolade according to match a certain accolade id.
+        /// </returns>
         //GET: api/PlayerData/ListPlayerforAccoldade/5
         [HttpGet]
         [ResponseType(typeof(PlayerDto))]
@@ -87,7 +106,13 @@ namespace Danyal_Chatha_Passion_Project.Controllers
             return Ok(playerDtos);
         }
 
-
+        /// <summary>
+        /// Associate a certain accolade with a certain team.
+        /// </summary>
+        /// <param name="playerid">The Player Id primary key</param>
+        /// <param name="accoladeid">The Accolade Id primary key</param>
+        /// <returns>
+        /// </returns>
         //GET: api/PlayerData/AssociatePlayerWithAccolade/1/4
         [HttpPost]
         [Route("api/PlayerData/AssociatePlayerWithAccolade/{playerid}/{accoladeid}")]
@@ -107,6 +132,12 @@ namespace Danyal_Chatha_Passion_Project.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Removes a associated accolade from the particular player
+        /// </summary>
+        /// <param name="playerid">The Player Id primary key</param>
+        /// <param name="accoladeid">The Accolade Id primary key</param>
+        /// <returns></returns>
         //POST: api/PlayerData/UnAssociatePlayerWithAccolade/1/4
         [HttpPost]
         [Route("api/PlayerData/UnAssociatePlayerWithAccolade/{playerid}/{accoladeid}")]
@@ -126,6 +157,13 @@ namespace Danyal_Chatha_Passion_Project.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Return all players in the system
+        /// </summary>
+        /// <param name="id">The Player Id primary key</param>
+        /// <returns>
+        /// Content: A player in the system matching up to the player Id primary key
+        /// </returns>
         // GET: api/PlayerData/FindPlayer/5
         [ResponseType(typeof(PlayerDto))]
         [HttpGet]
@@ -150,6 +188,12 @@ namespace Danyal_Chatha_Passion_Project.Controllers
             return Ok(playerDto);
         }
 
+        /// <summary>
+        /// Updates a player according to requested player id.
+        /// </summary>
+        /// <param name="id">Represent the player Id primary key </param>
+        /// <param name="player">JSON FORM DATA of a player </param>
+        /// <returns></returns>
         // POST: api/PlayerData/UpdatePlayer/5
         [ResponseType(typeof(void))]
         [HttpPost]
@@ -186,6 +230,13 @@ namespace Danyal_Chatha_Passion_Project.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
+        /// <summary>
+        /// Add a player to the database
+        /// </summary>
+        /// <param name="player"> JSON FORM DATA of a player </param>
+        /// <returns>
+        /// Content: Player Id & PlayerData
+        /// </returns>
         // POST: api/PlayerData/AddPlayer
         [ResponseType(typeof(Player))]
         [HttpPost]
@@ -202,6 +253,11 @@ namespace Danyal_Chatha_Passion_Project.Controllers
             return CreatedAtRoute("DefaultApi", new { id = player.PlayerId }, player);
         }
 
+        /// <summary>
+        /// Delete/Removes a player from the database
+        /// </summary>
+        /// <param name="id">The Primary Key of the player</param>
+        /// <returns></returns>
         // POST: api/PlayerData/DeletePlayer/5
         [ResponseType(typeof(Player))]
         [HttpPost]

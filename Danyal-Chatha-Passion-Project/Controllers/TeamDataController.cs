@@ -15,7 +15,11 @@ namespace Danyal_Chatha_Passion_Project.Controllers
     public class TeamDataController : ApiController
     {
         private ApplicationDbContext db = new ApplicationDbContext();
-
+        /// <summary>
+        /// Returns a list of all the teams in the database
+        /// </summary>
+        /// <returns>
+        /// </returns>
         // GET: api/TeamData/ListTeams
         [HttpGet]
         [ResponseType(typeof(TeamDto))]
@@ -34,6 +38,13 @@ namespace Danyal_Chatha_Passion_Project.Controllers
             return Ok(TeamDto);
         }
 
+        /// <summary>
+        /// Returns all teams in the system
+        /// </summary>
+        /// <param name="id">The primary key of the team</param>
+        /// <returns>
+        /// Content: An Team in the system matching up to the Team Id.
+        /// </returns>
         // GET: api/TeamData/FindTeam/5
         [ResponseType(typeof(TeamDto))]
         [HttpGet]
@@ -53,7 +64,12 @@ namespace Danyal_Chatha_Passion_Project.Controllers
 
             return Ok(TeamDto);
         }
-
+        /// <summary>
+        /// Able to update the team in the system with the matching id 
+        /// </summary>
+        /// <param name="id">The Primary key of the team</param>
+        /// <param name="team">JSON FORM DATA of an teams</param>
+        /// <returns></returns>
         // PUT: api/TeamData/UpdateTeam/5
         [ResponseType(typeof(void))]
         [HttpPost]
@@ -88,7 +104,13 @@ namespace Danyal_Chatha_Passion_Project.Controllers
             }
             return StatusCode(HttpStatusCode.NoContent);
         }
-
+        /// <summary>
+        /// Add a team to the database
+        /// </summary>
+        /// <param name="team">JSON FORM DATA of an team</param>
+        /// <returns>
+        /// Content: Team Id & Team Data
+        /// </returns>
         // POST: api/TeamData/AddTeam
         [ResponseType(typeof(Team))]
         [HttpPost]
@@ -104,7 +126,12 @@ namespace Danyal_Chatha_Passion_Project.Controllers
 
             return CreatedAtRoute("DefaultApi", new { id = team.TeamId }, team);
         }
-
+        /// <summary>
+        /// Delete a team with the matching id that has been requested
+        /// </summary>
+        /// <param name="id">The Primary Key of team</param>
+        /// <returns>
+        /// </returns>
         // DELETE: api/TeamData/DeleteTeam/5
         [ResponseType(typeof(Team))]
         [HttpPost]
