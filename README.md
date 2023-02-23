@@ -1,3 +1,6 @@
 # Danyal-Chatha-Passion-Project
 
-This is an application craeted to have the ablity to create, read, update and delete on a topic that I was passionate about in this case the National Basketball Association in other words the NBA. I had alot of trial and tribulations creating this project I got everything to work but the ability to update the "Accolade" table as the POST method wasn't generating/matching with the GET method and I could find a soloution to fix it in the desire timeframe, I will be adding more features in the upcoming week.
+This is an application craeted to have the ablity to create, read, update and delete on a topic that I was passionate about in this case the National Basketball Association in other words the NBA. I had also added the abilty to add media types to Teams and Players. The accepted image types are Gif, Png, Jpg & Jpeg. This application allows you to track what player is on what team and what player has what accolades you also able to update the player if he gets traded or is rewarded a new accolade.
+The NBA Application is something that I will most likley be keep adding features as I progress further along my career. I think the next thing I want to add is the abilty to have a search function for all three table entity.
+
+Have fun exploring this application.
