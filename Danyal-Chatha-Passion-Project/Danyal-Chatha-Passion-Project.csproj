@@ -221,6 +221,22 @@
     <Compile Include="Migrations\202302100414262_teambio.designer.cs">
       <DependentUpon>202302100414262_teambio.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202302161856136_PlayerPic.cs" />
+    <Compile Include="Migrations\202302161856136_PlayerPic.designer.cs">
+      <DependentUpon>202302161856136_PlayerPic.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202302162002499_Accoladee.cs" />
+    <Compile Include="Migrations\202302162002499_Accoladee.designer.cs">
+      <DependentUpon>202302162002499_Accoladee.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202302170231022_ppic.cs" />
+    <Compile Include="Migrations\202302170231022_ppic.designer.cs">
+      <DependentUpon>202302170231022_ppic.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202302220325168_teampic.cs" />
+    <Compile Include="Migrations\202302220325168_teampic.designer.cs">
+      <DependentUpon>202302220325168_teampic.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Accolade.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -313,6 +329,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\Images\Players\" />
+    <Folder Include="Content\Images\Teams\" />
+    <Folder Include="Views\UpdateTeam\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -348,6 +367,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202302100414262_teambio.resx">
       <DependentUpon>202302100414262_teambio.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202302161856136_PlayerPic.resx">
+      <DependentUpon>202302161856136_PlayerPic.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202302162002499_Accoladee.resx">
+      <DependentUpon>202302162002499_Accoladee.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202302170231022_ppic.resx">
+      <DependentUpon>202302170231022_ppic.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202302220325168_teampic.resx">
+      <DependentUpon>202302220325168_teampic.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

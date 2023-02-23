@@ -9,16 +9,25 @@
 <br />
 <a style="color:red;" href="/Player/DeleteConfirm/@Model.SelectedPlayer.PlayerId">Delete</a>
 <h2>@Model.SelectedPlayer.PlayerName</h2>
-<div>Jersey Number: @Model.SelectedPlayer.PlayerJersey</div>
-<div>Position: @Model.SelectedPlayer.PlayerPosition</div>
-<div>Team: @Model.SelectedPlayer.TeamName</div>
 
-<div>
-    <h2>Accolade Acquired for @Model.SelectedPlayer.PlayerName:</h2>
-    @foreach(var accolade in Model.AquiredAccolades)
+        @{
+            string imageurl = "/Content/Images/Players/default.png";
+            if (Model.SelectedPlayer.PlayerHasPic)
             {
-                <a href="/Accolade/Details/@accolade.AccoladeId">@accolade.AccoladeName</a> <a style="color:#ab2020;" href="/Player/Unassociate/@Model.SelectedPlayer.PlayerId?AccoladeId=@accolade.AccoladeId">[x]</a><br />
+                imageurl = "/Content/Images/Players/" + Model.SelectedPlayer.PlayerId +"."+ Model.SelectedPlayer.PicExtension;
             }
+        }
+        <div><img style="display:block; max-width:100%;" alt="@Model.SelectedPlayer.PlayerName" src="@imageurl"/></div>
+        <div>Jersey Number: @Model.SelectedPlayer.PlayerJersey</div>
+        <div>Position: @Model.SelectedPlayer.PlayerPosition</div>
+        <div>Team: @Model.SelectedPlayer.TeamName</div>
+
+    
+        <h2>Accolade Acquired for @Model.SelectedPlayer.PlayerName:</h2>
+        @foreach (var accolade in Model.AquiredAccolades)
+        {
+            <a href="/Accolade/Details/@accolade.AccoladeId">@accolade.AccoladeName</a> <a style="color:#ab2020;" href="/Player/Unassociate/@Model.SelectedPlayer.PlayerId?AccoladeId=@accolade.AccoladeId">[x]</a><br />
+        }
         <div>
             <h4>Add new accolade for @Model.SelectedPlayer.PlayerName</h4>
             <form method="POST" action="/Player/Associate/@Model.SelectedPlayer.PlayerId">
@@ -28,7 +37,6 @@
                         <option value="@accolade.AccoladeId">@accolade.AccoladeName</option>
                     }
                 </select>
-                    <input type="submit" value="Associate Accolade" />
+                <input type="submit" value="Associate Accolade" />
             </form>
         </div>
-</div>

@@ -28,6 +28,7 @@ namespace Danyal_Chatha_Passion_Project.Models
             public DbSet<Player> Players { get; set; }
 
             public DbSet<Team> Teams { get; set; }
+
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();

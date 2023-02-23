@@ -13,6 +13,11 @@ namespace Danyal_Chatha_Passion_Project.Models
 
         public string TeamBio { get; set; } 
 
+        //data needed for keeping track of team images uploaded
+        //images deposited into /Content/Images/Teams/{id}.{extension}
+
+        public bool TeamHasPic { get; set; }
+        public string TeamPicExtension { get; set; }
     }
 
     public class TeamDto
@@ -20,6 +25,9 @@ namespace Danyal_Chatha_Passion_Project.Models
         public int TeamId { get; set; }
         public string TeamName { get; set; }
         public string TeamBio { get; set; }
+        public bool TeamHasPic { get; set; }
+
+        public string TeamPicExtension { get; set; }
 
     }
 }

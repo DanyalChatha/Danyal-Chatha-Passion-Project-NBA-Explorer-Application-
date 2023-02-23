@@ -11,6 +11,18 @@
 <h2>@Model.SelectedTeam.TeamName</h2>
 <p>@Model.SelectedTeam.TeamBio</p>
 
+<div>
+    @{ 
+        string imageurl = "/Content/Images/Teams/defaultTeam.png";
+        if (Model.SelectedTeam.TeamHasPic)
+        {
+            imageurl = "/Content/Images/Teams/" + Model.SelectedTeam.TeamId + "." + Model.SelectedTeam.TeamPicExtension;
+        }
+    }
+
+    <div><img style="display:block; max-width:100%;" alt="@Model.SelectedTeam.TeamName" src="@imageurl" /></div>
+</div>
+
 <div style="margin-top:100px">
     <h3>Players playing on this team</h3>
     @foreach(var player in Model.RelatedPlayers)

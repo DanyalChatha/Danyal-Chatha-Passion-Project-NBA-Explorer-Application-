@@ -143,7 +143,7 @@ namespace Danyal_Chatha_Passion_Project.Controllers
 
         // POST: Player/Update/5
         [HttpPost]
-        public ActionResult Update(int id, Player player)
+        public ActionResult Update(int id, Player player, HttpPostedFileBase PlayerPic)
         {
             string url = "playerdata/updateplayer/"+id;
             string jsonpayload = jss.Serialize(player);
@@ -151,15 +151,29 @@ namespace Danyal_Chatha_Passion_Project.Controllers
             content.Headers.ContentType.MediaType = "application/json";
             HttpResponseMessage response = client.PostAsync(url, content).Result;
 
-            if (response.IsSuccessStatusCode)
+            //Update request is successful, and we have image data
+            if (response.IsSuccessStatusCode && PlayerPic != null)
             {
+                //updating the player picture as a seprate request
+                url = "playerdata/UploadPlayerPic/" + id;
+
+                MultipartFormDataContent requestcontent = new MultipartFormDataContent();
+                HttpContent imagecontent = new StreamContent(PlayerPic.InputStream);
+                requestcontent.Add(imagecontent, "PlayerPic", PlayerPic.FileName);
+                response = client.PostAsync(url, requestcontent).Result;
+
+                return RedirectToAction("List");
+            }
+            else if (response.IsSuccessStatusCode)
+            {
+                //No images upload, but update is successful
                 return RedirectToAction("List");
             }
             else
             {
                 return RedirectToAction("Error");
-            }                
-            
+            }
+
         }
 
         // GET: Player/DeleteConfirm/5

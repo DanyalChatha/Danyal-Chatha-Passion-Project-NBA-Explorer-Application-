@@ -3,12 +3,18 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
+using System.Web.Mvc;
 using Danyal_Chatha_Passion_Project.Models;
+using HttpGetAttribute = System.Web.Http.HttpGetAttribute;
+using HttpPostAttribute = System.Web.Http.HttpPostAttribute;
 
 namespace Danyal_Chatha_Passion_Project.Controllers
 {
@@ -32,7 +38,9 @@ namespace Danyal_Chatha_Passion_Project.Controllers
             {
                 TeamId = T.TeamId,
                 TeamName = T.TeamName,
-                TeamBio = T.TeamBio
+                TeamBio = T.TeamBio,
+                TeamHasPic = T.TeamHasPic,
+                TeamPicExtension = T.TeamPicExtension,
             }));
 
             return Ok(TeamDto);
@@ -55,7 +63,9 @@ namespace Danyal_Chatha_Passion_Project.Controllers
             {
                 TeamId = team.TeamId,
                 TeamName = team.TeamName,
-                TeamBio = team.TeamBio
+                TeamBio = team.TeamBio,
+                TeamHasPic = team.TeamHasPic,
+                TeamPicExtension = team.TeamPicExtension
             };
             if (team == null)
             {
@@ -86,6 +96,9 @@ namespace Danyal_Chatha_Passion_Project.Controllers
             }
 
             db.Entry(team).State = EntityState.Modified;
+            //Picture update is handled by another method
+            db.Entry(team).Property(T => T.TeamHasPic).IsModified = false;
+            db.Entry(team).Property(T => T.TeamHasPic).IsModified = false;
 
             try
             {
@@ -104,6 +117,71 @@ namespace Danyal_Chatha_Passion_Project.Controllers
             }
             return StatusCode(HttpStatusCode.NoContent);
         }
+
+        //POST: api/TeamData/Updateteampic/3
+        [HttpPost]
+        public IHttpActionResult UploadTeamPic(int id)
+        {
+            bool haspic = false;
+            string picextension;
+            if (Request.Content.IsMimeMultipartContent())
+            {
+                int numfiles = HttpContext.Current.Request.Files.Count;
+
+                //Check if file is posted
+                if (numfiles == 1 && HttpContext.Current.Request.Files[0] != null)
+                {
+                    var teamPic = HttpContext.Current.Request.Files[0];
+                    //Check if the file is empty
+                    if (teamPic.ContentLength > 0)
+                    {
+                        //Establish valid file type (can be changed to other file extensions if desired!)
+                        var valtypes = new[] { "jpeg", "jpg", "png", "gif" };
+                        var extension = Path.GetExtension(teamPic.FileName).Substring(1);
+                        //Check the extension of the file 
+                        if (valtypes.Contains(extension))
+                        {
+                            try
+                            {
+                                //file name is the id of the image
+                                string fn = id + "." + extension;
+
+                                //get a direct file path to ~/Content/teams/{id}.{extensions}
+                                string path = Path.Combine(HttpContext.Current.Server.MapPath("~/Content/Images/Teams/"), fn);
+                                
+                                //save the file
+                                
+                                teamPic.SaveAs(path);
+                                
+                                //if these are all successful than we can set these fields.
+                                haspic = true;
+                                picextension = extension;
+                                
+                                //Update the team haspic and picextension fields in the database
+                                Team SelectedTeam = db.Teams.Find(id);
+                                SelectedTeam.TeamHasPic = haspic;
+                                SelectedTeam.TeamPicExtension = picextension;
+                                db.Entry(SelectedTeam).State = EntityState.Modified;
+
+                                db.SaveChanges();
+                            }
+                            catch (Exception ex)
+                            {
+                                Debug.WriteLine("Exception:" + ex);
+                                return BadRequest();
+                            }
+                        }
+                    }
+                }
+                return Ok();
+            }
+            else
+            {
+                //Not multipart data
+                return BadRequest();
+            }
+        }   
+
         /// <summary>
         /// Add a team to the database
         /// </summary>
@@ -141,6 +219,16 @@ namespace Danyal_Chatha_Passion_Project.Controllers
             if (team == null)
             {
                 return NotFound();
+            }
+
+            if (team.TeamHasPic && team.TeamPicExtension != "")
+            {
+                //also delete image from path
+                string path = HttpContext.Current.Server.MapPath("~/Content/Images/Teams/" + id + "." + team.TeamPicExtension);
+                if (System.IO.File.Exists(path))
+                {
+                    System.IO.File.Delete(path);
+                }
             }
 
             db.Teams.Remove(team);

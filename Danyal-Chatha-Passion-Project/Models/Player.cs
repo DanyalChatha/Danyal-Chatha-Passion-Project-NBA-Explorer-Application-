@@ -15,6 +15,12 @@ namespace Danyal_Chatha_Passion_Project.Models
         public int  PlayerJersey { get; set; }
         public string PlayerPosition { get; set; }
 
+        //data needed for keeping track of animal images uploaded
+        //images deposited into /Content/Images/Players/{id}.{extension}
+        public bool PlayerHasPic { get; set; }
+        public string PicExtension { get; set; }
+
+
         //A player belong to one team
         //A team can have many players
         [ForeignKey("Team")]
@@ -36,5 +42,12 @@ namespace Danyal_Chatha_Passion_Project.Models
         public string TeamName { get; set; }
         public string TeamBio { get; set; }
         public int TeamId { get; set; }
-        }
+
+        //data needed for keeping track of animal images uploaded
+        //images deposited into /Content/Images/Players/{id}.{extension}
+        public bool PlayerHasPic { get; set; }
+        public string PicExtension { get; set; }
+    }
+
+
 }

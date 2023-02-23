@@ -93,16 +93,31 @@ namespace Danyal_Chatha_Passion_Project.Controllers
 
         // POST: Team/Update/5
         [HttpPost]
-        public ActionResult Update(int id, Team Team)
+        public ActionResult Update(int id, Team Team, HttpPostedFileBase TeamPic)
         {
+            
             string url = "teamdata/updateteam/" + id;
             string jsonpayload = jss.Serialize(Team);
             HttpContent content = new StringContent(jsonpayload);
             content.Headers.ContentType.MediaType = "application/json";
             HttpResponseMessage response = client.PostAsync(url, content).Result;
 
-            if (response.IsSuccessStatusCode)
+            //Update request is successful, and we have image data
+            if (response.IsSuccessStatusCode && TeamPic != null)
             {
+                //send over image data for team
+                url = "TeamData/UploadTeamPic/" + id;
+
+                MultipartFormDataContent requestcontent = new MultipartFormDataContent();
+                HttpContent imagecontent = new StreamContent(TeamPic.InputStream);
+                requestcontent.Add(imagecontent, "TeamPic", TeamPic.FileName);
+                response = client.PostAsync(url, requestcontent).Result;
+
+                return RedirectToAction("List");
+            }
+            else if (response.IsSuccessStatusCode)
+            {
+                //No image upload, but update still successful
                 return RedirectToAction("List");
             }
             else

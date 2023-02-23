@@ -4,9 +4,11 @@ using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
 using System.Web.Mvc;
@@ -39,6 +41,8 @@ namespace Danyal_Chatha_Passion_Project.Controllers
                 PlayerName = a.PlayerName,
                 PlayerJersey = a.PlayerJersey,
                 PlayerPosition = a.PlayerPosition,
+                PlayerHasPic = a.PlayerHasPic,
+                PicExtension = a.PicExtension,
                 TeamName = a.Team.TeamName
 
             }));
@@ -177,6 +181,8 @@ namespace Danyal_Chatha_Passion_Project.Controllers
                 PlayerName = player.PlayerName,
                 PlayerJersey = player.PlayerJersey,
                 PlayerPosition = player.PlayerPosition,
+                PlayerHasPic = player.PlayerHasPic,
+                PicExtension = player.PicExtension,
                 TeamName = player.Team.TeamName
             };
 
@@ -210,6 +216,9 @@ namespace Danyal_Chatha_Passion_Project.Controllers
             }
 
             db.Entry(player).State = EntityState.Modified;
+            //Picture update is handeled by another method
+            db.Entry(player).Property(a => a.PlayerHasPic).IsModified = false;
+            db.Entry(player).Property(a => a.PicExtension).IsModified = false;
 
             try
             {
@@ -228,6 +237,71 @@ namespace Danyal_Chatha_Passion_Project.Controllers
             }
 
             return StatusCode(HttpStatusCode.NoContent);
+        }
+
+
+        //POST: api/playerdata/UpdateplayerPic/1
+        [HttpPost]
+        public IHttpActionResult UploadPlayerPic(int id)
+        {
+            bool haspic = false;
+            string picextension;
+            if (Request.Content.IsMimeMultipartContent())
+            {
+                int numfiles = HttpContext.Current.Request.Files.Count;
+
+                //Checks if files is posted
+                if(numfiles == 1 && HttpContext.Current.Request.Files[0] != null)
+                {
+                    var playerPic = HttpContext.Current.Request.Files[0];
+                    //Check if files is empty
+                    if (playerPic.ContentLength > 0)
+                    {
+                        //Establish valid files types
+                        var valtypes = new[] { "jpeg", "jpg", "png", "gif" };
+                        var extension = Path.GetExtension(playerPic.FileName).Substring(1);
+                        //Check the extension of the file
+                        if (valtypes.Contains(extension))
+                        {
+                            try
+                            {
+                                //file name is the id of the image
+                                string fn = id + "." + extension;
+
+                                //get a direct file
+                                string path = Path.Combine(HttpContext.Current.Server.MapPath("~/Content/Images/Players/"), fn);
+
+                                //Save the file
+                                playerPic.SaveAs(path);
+
+                                //if these are all successful than we can set these fields
+                                haspic = true;
+                                picextension = extension;
+
+                                //Update the player haspic and picextension fields in the database
+                                Player SelectedPlayer = db.Players.Find(id);
+                                SelectedPlayer.PlayerHasPic = haspic;
+                                SelectedPlayer.PicExtension = extension;
+                                db.Entry(SelectedPlayer).State = EntityState.Modified;
+
+                                db.SaveChanges();
+                            }
+                            catch  (Exception ex)
+                            {
+                                Debug.WriteLine("Images was not saved successfully");
+                                Debug.WriteLine("Exception:" + ex);
+                                return BadRequest();
+                            }
+                        }
+                    }
+                }
+                return Ok();
+            }  
+            else
+            {
+                //Not multipart from data
+                return BadRequest();
+            }
         }
 
         /// <summary>
@@ -267,6 +341,16 @@ namespace Danyal_Chatha_Passion_Project.Controllers
             if (player == null)
             {
                 return NotFound();
+            }
+
+            if (player.PlayerHasPic && player.PicExtension != "")
+            {
+                //also delete image from path
+                string path = HttpContext.Current.Server.MapPath("~/Content/Images/Players/" + id + "." + player.PicExtension);
+                if (System.IO.File.Exists(path))
+                {
+                    System.IO.File.Delete(path);
+                }
             }
 
             db.Players.Remove(player);
