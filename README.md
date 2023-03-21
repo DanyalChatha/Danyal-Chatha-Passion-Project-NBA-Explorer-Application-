@@ -6,3 +6,5 @@ The NBA Application is something that I will most likley be keep adding features
 I also will be planning to spark the application design with basic CSS so it is more visual apealing to myself and many others.
 
 Have fun exploring this application.
+
+YouTube Link Demonstrating how to use the application: https://youtu.be/eeZvrp0vbUI
